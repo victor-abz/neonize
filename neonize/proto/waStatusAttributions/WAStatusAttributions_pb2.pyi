@@ -34,6 +34,7 @@ class StatusAttribution(google.protobuf.message.Message):
         STATUS_MENTION: StatusAttribution._Type.ValueType  # 4
         GROUP_STATUS: StatusAttribution._Type.ValueType  # 5
         RL_ATTRIBUTION: StatusAttribution._Type.ValueType  # 6
+        AI_CREATED: StatusAttribution._Type.ValueType  # 7
 
     class Type(_Type, metaclass=_TypeEnumTypeWrapper): ...
     UNKNOWN: StatusAttribution.Type.ValueType  # 0
@@ -43,6 +44,7 @@ class StatusAttribution(google.protobuf.message.Message):
     STATUS_MENTION: StatusAttribution.Type.ValueType  # 4
     GROUP_STATUS: StatusAttribution.Type.ValueType  # 5
     RL_ATTRIBUTION: StatusAttribution.Type.ValueType  # 6
+    AI_CREATED: StatusAttribution.Type.ValueType  # 7
 
     @typing.final
     class RLAttribution(google.protobuf.message.Message):

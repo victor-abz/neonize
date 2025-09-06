@@ -700,6 +700,7 @@ class BotCapabilityMetadata(google.protobuf.message.Message):
         RICH_RESPONSE_SOURCES_IN_MESSAGE: BotCapabilityMetadata._BotCapabilityType.ValueType  # 37
         RICH_RESPONSE_SIDE_BY_SIDE_SURVEY: BotCapabilityMetadata._BotCapabilityType.ValueType  # 38
         RICH_RESPONSE_UNIFIED_TEXT_COMPONENT: BotCapabilityMetadata._BotCapabilityType.ValueType  # 39
+        AI_SHARED_MEMORY: BotCapabilityMetadata._BotCapabilityType.ValueType  # 40
 
     class BotCapabilityType(_BotCapabilityType, metaclass=_BotCapabilityTypeEnumTypeWrapper): ...
     UNKNOWN: BotCapabilityMetadata.BotCapabilityType.ValueType  # 0
@@ -742,6 +743,7 @@ class BotCapabilityMetadata(google.protobuf.message.Message):
     RICH_RESPONSE_SOURCES_IN_MESSAGE: BotCapabilityMetadata.BotCapabilityType.ValueType  # 37
     RICH_RESPONSE_SIDE_BY_SIDE_SURVEY: BotCapabilityMetadata.BotCapabilityType.ValueType  # 38
     RICH_RESPONSE_UNIFIED_TEXT_COMPONENT: BotCapabilityMetadata.BotCapabilityType.ValueType  # 39
+    AI_SHARED_MEMORY: BotCapabilityMetadata.BotCapabilityType.ValueType  # 40
 
     CAPABILITIES_FIELD_NUMBER: builtins.int
     @property
@@ -961,6 +963,70 @@ class BotMessageOrigin(google.protobuf.message.Message):
     def ClearField(self, field_name: typing.Literal["type", b"type"]) -> None: ...
 
 global___BotMessageOrigin = BotMessageOrigin
+
+@typing.final
+class AIThreadInfo(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    @typing.final
+    class AIThreadClientInfo(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        class _AIThreadType:
+            ValueType = typing.NewType("ValueType", builtins.int)
+            V: typing_extensions.TypeAlias = ValueType
+
+        class _AIThreadTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[AIThreadInfo.AIThreadClientInfo._AIThreadType.ValueType], builtins.type):
+            DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+            UNKNOWN: AIThreadInfo.AIThreadClientInfo._AIThreadType.ValueType  # 0
+            DEFAULT: AIThreadInfo.AIThreadClientInfo._AIThreadType.ValueType  # 1
+            INCOGNITO: AIThreadInfo.AIThreadClientInfo._AIThreadType.ValueType  # 2
+
+        class AIThreadType(_AIThreadType, metaclass=_AIThreadTypeEnumTypeWrapper): ...
+        UNKNOWN: AIThreadInfo.AIThreadClientInfo.AIThreadType.ValueType  # 0
+        DEFAULT: AIThreadInfo.AIThreadClientInfo.AIThreadType.ValueType  # 1
+        INCOGNITO: AIThreadInfo.AIThreadClientInfo.AIThreadType.ValueType  # 2
+
+        TYPE_FIELD_NUMBER: builtins.int
+        type: global___AIThreadInfo.AIThreadClientInfo.AIThreadType.ValueType
+        def __init__(
+            self,
+            *,
+            type: global___AIThreadInfo.AIThreadClientInfo.AIThreadType.ValueType | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing.Literal["type", b"type"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing.Literal["type", b"type"]) -> None: ...
+
+    @typing.final
+    class AIThreadServerInfo(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        TITLE_FIELD_NUMBER: builtins.int
+        title: builtins.str
+        def __init__(
+            self,
+            *,
+            title: builtins.str | None = ...,
+        ) -> None: ...
+        def HasField(self, field_name: typing.Literal["title", b"title"]) -> builtins.bool: ...
+        def ClearField(self, field_name: typing.Literal["title", b"title"]) -> None: ...
+
+    SERVERINFO_FIELD_NUMBER: builtins.int
+    CLIENTINFO_FIELD_NUMBER: builtins.int
+    @property
+    def serverInfo(self) -> global___AIThreadInfo.AIThreadServerInfo: ...
+    @property
+    def clientInfo(self) -> global___AIThreadInfo.AIThreadClientInfo: ...
+    def __init__(
+        self,
+        *,
+        serverInfo: global___AIThreadInfo.AIThreadServerInfo | None = ...,
+        clientInfo: global___AIThreadInfo.AIThreadClientInfo | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["clientInfo", b"clientInfo", "serverInfo", b"serverInfo"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["clientInfo", b"clientInfo", "serverInfo", b"serverInfo"]) -> None: ...
+
+global___AIThreadInfo = AIThreadInfo
 
 @typing.final
 class BotAvatarMetadata(google.protobuf.message.Message):
@@ -1449,6 +1515,7 @@ class BotMetadata(google.protobuf.message.Message):
     UNIFIEDRESPONSEMUTATION_FIELD_NUMBER: builtins.int
     BOTMESSAGEORIGINMETADATA_FIELD_NUMBER: builtins.int
     INTHREADSURVEYMETADATA_FIELD_NUMBER: builtins.int
+    BOTTHREADINFO_FIELD_NUMBER: builtins.int
     personaID: builtins.str
     invokerJID: builtins.str
     timezone: builtins.str
@@ -1502,6 +1569,8 @@ class BotMetadata(google.protobuf.message.Message):
     def botMessageOriginMetadata(self) -> global___BotMessageOriginMetadata: ...
     @property
     def inThreadSurveyMetadata(self) -> global___InThreadSurveyMetadata: ...
+    @property
+    def botThreadInfo(self) -> global___AIThreadInfo: ...
     def __init__(
         self,
         *,
@@ -1535,8 +1604,9 @@ class BotMetadata(google.protobuf.message.Message):
         unifiedResponseMutation: global___BotUnifiedResponseMutation | None = ...,
         botMessageOriginMetadata: global___BotMessageOriginMetadata | None = ...,
         inThreadSurveyMetadata: global___InThreadSurveyMetadata | None = ...,
+        botThreadInfo: global___AIThreadInfo | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["aiConversationContext", b"aiConversationContext", "avatarMetadata", b"avatarMetadata", "botAgeCollectionMetadata", b"botAgeCollectionMetadata", "botLinkedAccountsMetadata", b"botLinkedAccountsMetadata", "botMessageOriginMetadata", b"botMessageOriginMetadata", "botMetricsMetadata", b"botMetricsMetadata", "botModeSelectionMetadata", b"botModeSelectionMetadata", "botPromotionMessageMetadata", b"botPromotionMessageMetadata", "botQuotaMetadata", b"botQuotaMetadata", "botResponseID", b"botResponseID", "capabilityMetadata", b"capabilityMetadata", "conversationStarterPromptID", b"conversationStarterPromptID", "imagineMetadata", b"imagineMetadata", "inThreadSurveyMetadata", b"inThreadSurveyMetadata", "invokerJID", b"invokerJID", "memoryMetadata", b"memoryMetadata", "memuMetadata", b"memuMetadata", "messageDisclaimerText", b"messageDisclaimerText", "modelMetadata", b"modelMetadata", "personaID", b"personaID", "pluginMetadata", b"pluginMetadata", "progressIndicatorMetadata", b"progressIndicatorMetadata", "reminderMetadata", b"reminderMetadata", "renderingMetadata", b"renderingMetadata", "richResponseSourcesMetadata", b"richResponseSourcesMetadata", "sessionMetadata", b"sessionMetadata", "suggestedPromptMetadata", b"suggestedPromptMetadata", "timezone", b"timezone", "unifiedResponseMutation", b"unifiedResponseMutation", "verificationMetadata", b"verificationMetadata"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["aiConversationContext", b"aiConversationContext", "avatarMetadata", b"avatarMetadata", "botAgeCollectionMetadata", b"botAgeCollectionMetadata", "botLinkedAccountsMetadata", b"botLinkedAccountsMetadata", "botMessageOriginMetadata", b"botMessageOriginMetadata", "botMetricsMetadata", b"botMetricsMetadata", "botModeSelectionMetadata", b"botModeSelectionMetadata", "botPromotionMessageMetadata", b"botPromotionMessageMetadata", "botQuotaMetadata", b"botQuotaMetadata", "botResponseID", b"botResponseID", "capabilityMetadata", b"capabilityMetadata", "conversationStarterPromptID", b"conversationStarterPromptID", "imagineMetadata", b"imagineMetadata", "inThreadSurveyMetadata", b"inThreadSurveyMetadata", "invokerJID", b"invokerJID", "memoryMetadata", b"memoryMetadata", "memuMetadata", b"memuMetadata", "messageDisclaimerText", b"messageDisclaimerText", "modelMetadata", b"modelMetadata", "personaID", b"personaID", "pluginMetadata", b"pluginMetadata", "progressIndicatorMetadata", b"progressIndicatorMetadata", "reminderMetadata", b"reminderMetadata", "renderingMetadata", b"renderingMetadata", "richResponseSourcesMetadata", b"richResponseSourcesMetadata", "sessionMetadata", b"sessionMetadata", "suggestedPromptMetadata", b"suggestedPromptMetadata", "timezone", b"timezone", "unifiedResponseMutation", b"unifiedResponseMutation", "verificationMetadata", b"verificationMetadata"]) -> None: ...
+    def HasField(self, field_name: typing.Literal["aiConversationContext", b"aiConversationContext", "avatarMetadata", b"avatarMetadata", "botAgeCollectionMetadata", b"botAgeCollectionMetadata", "botLinkedAccountsMetadata", b"botLinkedAccountsMetadata", "botMessageOriginMetadata", b"botMessageOriginMetadata", "botMetricsMetadata", b"botMetricsMetadata", "botModeSelectionMetadata", b"botModeSelectionMetadata", "botPromotionMessageMetadata", b"botPromotionMessageMetadata", "botQuotaMetadata", b"botQuotaMetadata", "botResponseID", b"botResponseID", "botThreadInfo", b"botThreadInfo", "capabilityMetadata", b"capabilityMetadata", "conversationStarterPromptID", b"conversationStarterPromptID", "imagineMetadata", b"imagineMetadata", "inThreadSurveyMetadata", b"inThreadSurveyMetadata", "invokerJID", b"invokerJID", "memoryMetadata", b"memoryMetadata", "memuMetadata", b"memuMetadata", "messageDisclaimerText", b"messageDisclaimerText", "modelMetadata", b"modelMetadata", "personaID", b"personaID", "pluginMetadata", b"pluginMetadata", "progressIndicatorMetadata", b"progressIndicatorMetadata", "reminderMetadata", b"reminderMetadata", "renderingMetadata", b"renderingMetadata", "richResponseSourcesMetadata", b"richResponseSourcesMetadata", "sessionMetadata", b"sessionMetadata", "suggestedPromptMetadata", b"suggestedPromptMetadata", "timezone", b"timezone", "unifiedResponseMutation", b"unifiedResponseMutation", "verificationMetadata", b"verificationMetadata"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["aiConversationContext", b"aiConversationContext", "avatarMetadata", b"avatarMetadata", "botAgeCollectionMetadata", b"botAgeCollectionMetadata", "botLinkedAccountsMetadata", b"botLinkedAccountsMetadata", "botMessageOriginMetadata", b"botMessageOriginMetadata", "botMetricsMetadata", b"botMetricsMetadata", "botModeSelectionMetadata", b"botModeSelectionMetadata", "botPromotionMessageMetadata", b"botPromotionMessageMetadata", "botQuotaMetadata", b"botQuotaMetadata", "botResponseID", b"botResponseID", "botThreadInfo", b"botThreadInfo", "capabilityMetadata", b"capabilityMetadata", "conversationStarterPromptID", b"conversationStarterPromptID", "imagineMetadata", b"imagineMetadata", "inThreadSurveyMetadata", b"inThreadSurveyMetadata", "invokerJID", b"invokerJID", "memoryMetadata", b"memoryMetadata", "memuMetadata", b"memuMetadata", "messageDisclaimerText", b"messageDisclaimerText", "modelMetadata", b"modelMetadata", "personaID", b"personaID", "pluginMetadata", b"pluginMetadata", "progressIndicatorMetadata", b"progressIndicatorMetadata", "reminderMetadata", b"reminderMetadata", "renderingMetadata", b"renderingMetadata", "richResponseSourcesMetadata", b"richResponseSourcesMetadata", "sessionMetadata", b"sessionMetadata", "suggestedPromptMetadata", b"suggestedPromptMetadata", "timezone", b"timezone", "unifiedResponseMutation", b"unifiedResponseMutation", "verificationMetadata", b"verificationMetadata"]) -> None: ...
 
 global___BotMetadata = BotMetadata
